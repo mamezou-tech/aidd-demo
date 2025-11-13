@@ -1,0 +1,24 @@
+{
+  "name": "github-investigator",
+  "description": "Amazon Q CLI GitHub repository investigation specialist",
+  "prompt": "file://./github-investigator-prompt.md",
+  "mcpServers": {
+    "fetch": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/fetch"]
+    }
+  },
+  "tools": [
+    "fs_read",
+    "introspect",
+    "@fetch"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "introspect",
+    "@fetch/fetch"
+  ],
+  "resources": [
+    "file://AmazonQ.md"
+  ]
+}

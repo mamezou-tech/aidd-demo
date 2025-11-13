@@ -39,14 +39,3 @@ out/
 ### Claude Code ###
 .claude/
 
-### Amazon Q Developer CLI ###
-# デフォルトで全て除外、必要なファイルのみホワイトリスト
-.amazonq/
-# 設定ファイルをコミット対象に
-!.amazonq/agent.json
-!.amazonq/prompts/
-!.amazonq/prompts/**
-!.amazonq/rules/
-!.amazonq/rules/**
-!.amazonq/cli-agents/
-!.amazonq/cli-agents/**
