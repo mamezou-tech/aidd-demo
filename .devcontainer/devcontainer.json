@@ -1,0 +1,62 @@
+{
+  "name": "Demo Development Container",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "installGradle": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false,
+      "installDockerBuildx": true,
+      "installDockerComposeSwitch": true
+    },
+    "ghcr.io/devcontainers/features/aws-cli:1": {
+      "version": "latest"
+    }
+  },
+
+  // Install uv, spec-kit, and Amazon Q Developer CLI after container creation
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.cargo/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli && curl --proto '=https' --tlsv1.2 -sSf https://desktop-release.q.us-east-1.amazonaws.com/latest/q-x86_64-linux.zip -o /tmp/q.zip && unzip -q /tmp/q.zip -d /tmp && /tmp/q/install.sh && rm -rf /tmp/q.zip /tmp/q",
+
+  // Forward ports for Spring Boot and MySQL
+  "forwardPorts": [8080, 3306],
+
+  // VS Code extensions to install
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.java",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-spring-boot-dashboard",
+        "pivotal.vscode-spring-boot",
+        "vscjava.vscode-maven",
+        "vscjava.vscode-gradle",
+        "amazonwebservices.amazon-q-vscode",
+        "ms-ceintl.vscode-language-pack-ja",
+        "Anthropic.claude-code"
+      ],
+      "settings": {
+        "java.jdt.ls.java.home": "/usr/local/sdkman/candidates/java/current"
+      }
+    }
+  },
+
+  // Run as non-root user
+  "remoteUser": "vscode",
+
+  // Mount docker socket for docker-compose support and AWS credentials
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached"
+  ]
+}
