@@ -1,4 +1,11 @@
+# コンテナ構成:
+# - デフォルト（開発モード）: mysql のみ起動
+#   $ docker-compose up -d
+# - 本番モード: 全コンテナ起動
+#   $ docker-compose --profile prod up -d
+
 services:
+  # 常に起動（開発・本番共通）
   mysql:
     image: mysql:8.0
     container_name: talent-mysql
@@ -16,6 +23,47 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - talent-network
+
+  # 本番モード用
+  backend:
+    profiles: ["prod"]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: talent-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/talent_management
+      SPRING_DATASOURCE_USERNAME: talent_user
+      SPRING_DATASOURCE_PASSWORD: talent_pass
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - talent-network
+
+  # 本番モード用
+  frontend:
+    profiles: ["prod"]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: talent-frontend
+    ports:
+      - "80:80"
+    environment:
+      VITE_API_URL: http://backend:8080
+    depends_on:
+      - backend
+    networks:
+      - talent-network
+
+networks:
+  talent-network:
+    driver: bridge
 
 volumes:
   mysql_data:
