@@ -15,7 +15,7 @@ export const HomePage = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>タレントマネジメントシステム</h1>
+      <h1>社員検索システム</h1>
       <p>ユーザー名: admin</p>
       
       <div style={{ marginTop: '20px' }}>

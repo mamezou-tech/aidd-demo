@@ -99,6 +99,6 @@ test.describe('社員詳細画面', () => {
     await page.waitForURL('**/home');
 
     // ホーム画面に戻ったことを確認
-    await expect(page.locator('text=タレントマネジメントシステム').first()).toBeAttached();
+    await expect(page.locator('text=社員検索システム').first()).toBeAttached();
   });
 });

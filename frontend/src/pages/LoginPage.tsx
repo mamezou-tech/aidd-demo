@@ -34,7 +34,7 @@ export const LoginPage = () => {
 
   return (
     <div style={{ maxWidth: '400px', margin: '100px auto', padding: '20px' }}>
-      <h1>タレントマネジメントシステム</h1>
+      <h1>社員検索システム</h1>
       <h2>ログイン</h2>
       
       {error && (

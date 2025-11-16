@@ -1,4 +1,4 @@
-# タレントマネジメントシステム MVP
+# 社員検索システム MVP
 
 **Version**: 1.0.0  
 **Branch**: 001-talent-management-mvp
