@@ -295,17 +295,17 @@ VALUES
 
 ## 4. テスト戦略
 
-### 4.1 テストピラミッド
+### 4.1 テスト戦略
 
-```
-        ┌─────────────┐
-        │   E2E (5%)  │  ← フロント含む全体動作
-        ├─────────────┤
-        │  API (15%)  │  ← Controller + DB
-        ├─────────────┤
-        │ Unit (80%)  │  ← Service, Repository
-        └─────────────┘
-```
+#### テスト構成（実装済み）
+
+- **ユニットテスト**: Domain層、Application層のロジック検証
+- **統合テスト**: Repository層（実DB使用）、Controller層（MockMvc使用）
+- **E2Eテスト**: 部分実装（Playwright環境構築済み、日本語フォント問題により制限あり）
+
+#### 実績
+- バックエンド: 30テスト全て成功
+- API層: 完全動作確認済み
 
 ### 4.2 ユニットテスト
 
@@ -533,10 +533,7 @@ Docker Network: talent-management-network
 - 検索頻度の高いカラムにインデックス作成
 - ページネーションによる大量データ対策
 
-### 8.2 キャッシュ
-- MVP では実装しない（将来拡張）
-
-### 8.3 目標値
+### 8.2 目標値
 - 検索レスポンス: 3秒以内（1000件以下）
 - 画面遷移: 2秒以内
 
@@ -553,51 +550,20 @@ Docker Network: talent-management-network
 - API アクセスログ
 - エラーログ（スタックトレース含む）
 
-### 9.3 監視（将来拡張）
-- Spring Boot Actuator
-- Prometheus + Grafana
-
 ---
 
-## 10. デプロイ戦略（将来）
+## 10. 開発環境要件
 
-### 10.1 AWS 構成案
-```
-Internet
-   │
-   ▼
-ALB (HTTPS)
-   │
-   ├─ ECS (Backend)
-   │   └─ Spring Boot Container
-   │
-   ├─ S3 + CloudFront (Frontend)
-   │   └─ React Static Files
-   │
-   └─ RDS (MySQL)
-       └─ Multi-AZ
-```
-
-### 10.2 CI/CD
-- GitHub Actions
-- 自動テスト実行
-- Docker イメージビルド
-- ECS デプロイ
-
----
-
-## 11. 開発環境要件
-
-### 11.1 必須ツール
+### 10.1 必須ツール
 - Java 17
 - Node.js 18+
 - Docker Desktop
 - Git
 
-### 11.2 推奨IDE
+### 10.2 推奨IDE
 - IntelliJ IDEA（バックエンド）
 - VS Code（フロントエンド）
 
-### 11.3 ブラウザ
+### 10.3 ブラウザ
 - Chrome（最新版）
 - Firefox（最新版）
