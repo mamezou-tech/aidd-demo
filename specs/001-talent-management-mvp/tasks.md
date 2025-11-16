@@ -241,8 +241,31 @@
 
 ---
 
-### TASK-106: ログイン画面作成（フロント）
+### TASK-106: ログイン画面作成（フロント） ✅
 **優先度**: 高  
+**見積**: 3時間  
+**依存**: TASK-104  
+**ステータス**: DONE
+
+**作業内容**:
+- [x] LoginPage コンポーネント作成
+- [x] authService 作成（API呼び出し）
+- [x] フォームバリデーション
+- [x] エラーメッセージ表示
+- [x] セッション管理（axios interceptor）
+
+**成果物**:
+- `frontend/src/pages/LoginPage.tsx`
+- `frontend/src/services/authService.ts`
+- `frontend/src/types/auth.ts`
+
+**テスト**:
+- [x] ログイン成功確認
+- [x] ログイン失敗時エラー表示確認
+
+---
+
+## Phase 3: ホーム画面（0.5日）
 **見積**: 3時間  
 **依存**: TASK-104
 
