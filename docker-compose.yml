@@ -1,42 +1,21 @@
 services:
-  mysqldb:
-    image: mysql:8.4
-    container_name: q-developer-demo-mysql
+  mysql:
+    image: mysql:8.0
+    container_name: talent-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: appdb
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: apppass
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: talent_management
+      MYSQL_USER: talent_user
+      MYSQL_PASSWORD: talent_pass
     ports:
       - "3306:3306"
     volumes:
-      - dbdata:/var/lib/mysql
-      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysql -uroot -prootpass -e 'SELECT 1' >/dev/null 2>&1"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
-      retries: 10
-      start_period: 60s
-
-  app:
-    build: .
-    container_name: q-developer-demo-app
-    depends_on:
-      mysqldb:
-        condition: service_healthy
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: appuser
-      SPRING_DATASOURCE_PASSWORD: apppass
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 30s
+      retries: 5
 
 volumes:
-  dbdata:
+  mysql_data:
