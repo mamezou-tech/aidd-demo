@@ -1,6 +1,6 @@
 -- ユーザーデータ (パスワード: password123)
 INSERT INTO user (username, password_hash) 
-VALUES ('admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
+VALUES ('admin', '$2a$10$nIRFT7.QkxOa0Z8lqXelO.6AFIg6Hp.PdVJT4Ly3mdCvZxc4rXVi.');
 
 -- 社員テストデータ（10件）
 INSERT INTO employee (employee_code, full_name, full_name_kana, email, position, employment_type, hire_date)
