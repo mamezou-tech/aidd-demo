@@ -485,17 +485,17 @@
 
 ## Phase 5: 社員詳細表示（1日）
 
-### TASK-401: EmployeeDetailService 作成（TDD）
+### TASK-401: EmployeeDetailService 作成（TDD） ✅
 **優先度**: 高  
 **見積**: 1時間  
 **依存**: TASK-302
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeDetailServiceTest.java`
+1. [x] テスト作成: `EmployeeDetailServiceTest.java`
    - ID検索テスト
    - 存在しない社員テスト
    - 削除済み社員テスト
-2. [ ] 実装: `EmployeeDetailService.java`
+2. [x] 実装: `EmployeeDetailService.java`
    - `findById` メソッド
 
 **成果物**:
@@ -507,16 +507,16 @@
 
 ---
 
-### TASK-402: EmployeeController 詳細API追加（TDD）
+### TASK-402: EmployeeController 詳細API追加（TDD） ✅
 **優先度**: 高  
 **見積**: 1時間  
 **依存**: TASK-401
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeControllerTest.java` に追加
+1. [x] テスト作成: `EmployeeControllerTest.java` に追加
    - GET /api/employees/{id} テスト
    - 404エラーテスト
-2. [ ] 実装: `EmployeeController.java` に追加
+2. [x] 実装: `EmployeeController.java` に追加
    - 詳細取得エンドポイント
 
 **成果物**:
@@ -527,16 +527,16 @@
 
 ---
 
-### TASK-403: 社員詳細画面作成（フロント）
+### TASK-403: 社員詳細画面作成（フロント） ✅
 **優先度**: 高  
 **見積**: 3時間  
 **依存**: TASK-402
 
 **作業内容**:
-- [ ] EmployeeDetailPage コンポーネント作成
-- [ ] 詳細情報表示
-- [ ] 検索画面へ戻るボタン
-- [ ] ホームへ戻るリンク
+- [x] EmployeeDetailPage コンポーネント作成
+- [x] 詳細情報表示
+- [x] 検索画面へ戻るボタン
+- [x] ホームへ戻るリンク
 
 **成果物**:
 - `frontend/src/pages/EmployeeDetailPage.tsx`
