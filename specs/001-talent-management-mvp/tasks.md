@@ -346,10 +346,10 @@
 
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeTest.java`
+1. [x] テスト作成: `EmployeeTest.java`
    - エンティティ生成テスト
    - 論理削除テスト
-2. [ ] 実装: `Employee.java`
+2. [x] 実装: `Employee.java`
    - `@Entity` 定義
    - 全フィールド定義
 
@@ -368,13 +368,13 @@
 **依存**: TASK-301
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeRepositoryTest.java`
+1. [x] テスト作成: `EmployeeRepositoryTest.java`
    - 氏名部分一致検索テスト
    - カナ部分一致検索テスト
    - 複数条件AND検索テスト
    - 削除済み社員除外テスト
    - ページネーションテスト
-2. [ ] 実装: `EmployeeRepository.java`
+2. [x] 実装: `EmployeeRepository.java`
    - `JpaRepository` + `JpaSpecificationExecutor` 継承
    - 検索メソッド
 
@@ -393,10 +393,10 @@
 **依存**: TASK-302
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeSpecificationTest.java`
+1. [x] テスト作成: `EmployeeSpecificationTest.java`
    - 各検索条件のSpecificationテスト
    - 条件組み合わせテスト
-2. [ ] 実装: `EmployeeSpecification.java`
+2. [x] 実装: `EmployeeSpecification.java`
    - 氏名検索Specification
    - カナ検索Specification
    - その他検索条件Specification
@@ -417,11 +417,11 @@
 **依存**: TASK-303
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeSearchServiceTest.java`
+1. [x] テスト作成: `EmployeeSearchServiceTest.java`
    - 検索ロジックテスト
    - ページネーションテスト
    - ソートテスト
-2. [ ] 実装: `EmployeeSearchService.java`
+2. [x] 実装: `EmployeeSearchService.java`
    - `search` メソッド
    - Specification組み立てロジック
 
