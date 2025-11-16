@@ -1,5 +1,5 @@
 export interface Employee {
-  id: number;
+  employeeId: number;
   employeeCode: string;
   fullName: string;
   fullNameKana: string;

@@ -1,21 +1,19 @@
 import axios from 'axios';
 import { Employee, EmployeeSearchParams, PageResponse } from '../types/employee';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const api = axios.create({
+  baseURL: '/api',
+  withCredentials: true
+});
 
 export const employeeService = {
   search: async (params: EmployeeSearchParams): Promise<PageResponse<Employee>> => {
-    const response = await axios.get<PageResponse<Employee>>(`${API_BASE_URL}/employees`, {
-      params,
-      withCredentials: true,
-    });
+    const response = await api.get<PageResponse<Employee>>('/employees', { params });
     return response.data;
   },
 
   getById: async (id: number): Promise<Employee> => {
-    const response = await axios.get<Employee>(`${API_BASE_URL}/employees/${id}`, {
-      withCredentials: true,
-    });
+    const response = await api.get<Employee>(`/employees/${id}`);
     return response.data;
   },
 };

@@ -6,6 +6,18 @@ const api = axios.create({
   withCredentials: true
 });
 
+// レスポンスインターセプター: セッションタイムアウト検知
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // セッションタイムアウト
+      window.location.href = '/login?timeout=true';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const authService = {
   login: async (username: string, password: string): Promise<LoginResponse> => {
     const response = await api.post<LoginResponse>('/auth/login', {

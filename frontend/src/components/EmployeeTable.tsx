@@ -27,7 +27,7 @@ export const EmployeeTable = ({ employees }: EmployeeTableProps) => {
       </thead>
       <tbody>
         {employees.map((employee) => (
-          <tr key={employee.id} style={{ borderBottom: '1px solid #ddd' }}>
+          <tr key={employee.employeeId} style={{ borderBottom: '1px solid #ddd' }}>
             <td style={{ padding: '12px' }}>{employee.employeeCode}</td>
             <td style={{ padding: '12px' }}>{employee.fullName}</td>
             <td style={{ padding: '12px' }}>{employee.fullNameKana}</td>
@@ -35,7 +35,7 @@ export const EmployeeTable = ({ employees }: EmployeeTableProps) => {
             <td style={{ padding: '12px' }}>{employee.position}</td>
             <td style={{ padding: '12px' }}>{employee.employmentType}</td>
             <td style={{ padding: '12px' }}>
-              <button onClick={() => navigate(`/employees/${employee.id}`)}>
+              <button onClick={() => navigate(`/employees/${employee.employeeId}`)}>
                 詳細
               </button>
             </td>
