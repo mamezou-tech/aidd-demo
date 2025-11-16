@@ -24,10 +24,10 @@
   },
 
   // Install uv, spec-kit, and Amazon Q Developer CLI after container creation
-  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.cargo/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli && curl --proto '=https' --tlsv1.2 -sSf https://desktop-release.q.us-east-1.amazonaws.com/latest/q-x86_64-linux.zip -o /tmp/q.zip && unzip -q /tmp/q.zip -d /tmp && /tmp/q/install.sh && rm -rf /tmp/q.zip /tmp/q",
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.cargo/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli && curl --proto '=https' --tlsv1.2 -sSf https://desktop-release.q.us-east-1.amazonaws.com/latest/q-x86_64-linux.zip -o /tmp/q.zip && unzip -q /tmp/q.zip -d /tmp && /tmp/q/install.sh && rm -rf /tmp/q.zip /tmp/q && cd /workspaces/q-developer-demo-2 && docker-compose up -d mysql",
 
-  // Forward ports for Spring Boot and MySQL
-  "forwardPorts": [8080, 3306],
+  // Forward ports for Spring Boot, Vite dev server, and MySQL
+  "forwardPorts": [8080, 5173, 3306],
 
   // VS Code extensions to install
   "customizations": {
