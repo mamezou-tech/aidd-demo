@@ -456,17 +456,17 @@
 
 ---
 
-### TASK-306: 社員検索画面作成（フロント）
+### TASK-306: 社員検索画面作成（フロント） ✅
 **優先度**: 高  
 **見積**: 4時間  
 **依存**: TASK-305
 
 **作業内容**:
-- [ ] EmployeeSearchPage コンポーネント作成
-- [ ] EmployeeSearchForm コンポーネント作成
-- [ ] EmployeeTable コンポーネント作成
-- [ ] Pagination コンポーネント作成
-- [ ] employeeService 作成（API呼び出し）
+- [x] EmployeeSearchPage コンポーネント作成
+- [x] EmployeeSearchForm コンポーネント作成
+- [x] EmployeeTable コンポーネント作成
+- [x] Pagination コンポーネント作成
+- [x] employeeService 作成（API呼び出し）
 
 **成果物**:
 - `frontend/src/pages/EmployeeSearchPage.tsx`

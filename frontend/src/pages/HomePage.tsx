@@ -19,7 +19,9 @@ export const HomePage = () => {
       <p>ユーザー名: admin</p>
       
       <div style={{ marginTop: '20px' }}>
-        <a href="/search" style={{ marginRight: '20px' }}>社員検索</a>
+        <button onClick={() => navigate('/employees')} style={{ marginRight: '10px' }}>
+          社員検索
+        </button>
         <button onClick={handleLogout}>ログアウト</button>
       </div>
     </div>
