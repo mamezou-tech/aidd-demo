@@ -11,4 +11,11 @@ export const employeeService = {
     });
     return response.data;
   },
+
+  getById: async (id: number): Promise<Employee> => {
+    const response = await axios.get<Employee>(`${API_BASE_URL}/employees/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  },
 };
