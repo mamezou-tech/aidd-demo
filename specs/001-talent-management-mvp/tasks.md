@@ -15,19 +15,20 @@
 
 ## Phase 1: 基盤構築（1日）
 
-### TASK-001: プロジェクト初期化
+### TASK-001: プロジェクト初期化 ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: なし
+**依存**: なし  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] Spring Boot プロジェクト作成（Spring Initializr）
+- [x] Spring Boot プロジェクト作成（Spring Initializr）
   - Java 17
   - Spring Boot 3.x
   - 依存: Web, JPA, MySQL, Security, Validation, Testcontainers
-- [ ] React プロジェクト作成（Vite + TypeScript）
-- [ ] `.gitignore` 設定
-- [ ] README.md 作成（起動手順記載）
+- [x] React プロジェクト作成（Vite + TypeScript）
+- [x] `.gitignore` 設定
+- [x] README.md 作成（起動手順記載）
 
 **成果物**:
 - `backend/pom.xml` または `build.gradle`
@@ -36,99 +37,104 @@
 
 ---
 
-### TASK-002: データベーススキーマ作成
+### TASK-002: データベーススキーマ作成 ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: TASK-001
+**依存**: TASK-001  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] マイグレーションスクリプト作成
+- [x] マイグレーションスクリプト作成
   - `V1__create_employee_table.sql`
   - `V2__create_user_table.sql`
-- [ ] インデックス定義
-- [ ] 外部キー制約設定
+- [x] インデックス定義
+- [x] 外部キー制約設定
 
 **成果物**:
 - `backend/src/main/resources/db/migration/V1__create_employee_table.sql`
 - `backend/src/main/resources/db/migration/V2__create_user_table.sql`
 
 **テスト**:
-- [ ] マイグレーション実行確認
-- [ ] テーブル作成確認
+- [x] マイグレーション実行確認
+- [x] テーブル作成確認
 
 ---
 
-### TASK-003: 初期データ投入スクリプト作成
+### TASK-003: 初期データ投入スクリプト作成 ✅
 **優先度**: 高  
 **見積**: 1時間  
-**依存**: TASK-002
+**依存**: TASK-002  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] ユーザーデータ投入（admin/password123）
-- [ ] 社員テストデータ10件投入
+- [x] ユーザーデータ投入（admin/password123）
+- [x] 社員テストデータ10件投入
 
 **成果物**:
 - `backend/src/main/resources/db/migration/V3__insert_initial_data.sql`
 
 **テスト**:
-- [ ] データ投入確認
+- [x] データ投入確認
 - [ ] ログイン可能確認（後続タスクで）
 
 ---
 
-### TASK-004: Testcontainers 設定
+### TASK-004: Testcontainers 設定 ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: TASK-001
+**依存**: TASK-001  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] テスト用ベースクラス作成
-- [ ] MySQL コンテナ設定
-- [ ] テストプロファイル設定
+- [x] テスト用ベースクラス作成
+- [x] MySQL コンテナ設定
+- [x] テストプロファイル設定
 
 **成果物**:
 - `backend/src/test/java/com/example/talent/TestBase.java`
 - `backend/src/test/resources/application-test.yml`
 
 **テスト**:
-- [ ] コンテナ起動確認
-- [ ] DB接続確認
+- [x] コンテナ起動確認
+- [x] DB接続確認
 
 ---
 
-### TASK-005: Docker Compose 設定
+### TASK-005: Docker Compose 設定 ✅
 **優先度**: 中  
 **見積**: 1時間  
-**依存**: TASK-001
+**依存**: TASK-001  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] `docker-compose.yml` 作成
+- [x] `docker-compose.yml` 作成
   - MySQL サービス
   - Backend サービス（後で追加）
   - Frontend サービス（後で追加）
-- [ ] 環境変数設定
+- [x] 環境変数設定
 
 **成果物**:
 - `docker-compose.yml`
 - `.env.example`
 
 **テスト**:
-- [ ] `docker-compose up -d` で起動確認
+- [x] `docker-compose up -d` で起動確認
 
 ---
 
 ## Phase 2: 認証機能（2日）
 
-### TASK-101: User エンティティ作成（TDD）
+### TASK-101: User エンティティ作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 1時間  
-**依存**: TASK-002
+**依存**: TASK-002  
+**ステータス**: DONE
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `UserTest.java`
+1. [x] テスト作成: `UserTest.java`
    - パスワードハッシュ化テスト
    - エンティティ生成テスト
-2. [ ] 実装: `User.java`
+2. [x] 実装: `User.java`
    - `@Entity` 定義
    - BCrypt パスワードハッシュ化メソッド
 
@@ -137,20 +143,21 @@
 - `backend/src/test/java/com/example/talent/domain/UserTest.java`
 
 **テスト**:
-- [ ] すべてのユニットテストがパス
+- [x] すべてのユニットテストがパス
 
 ---
 
-### TASK-102: UserRepository 作成（TDD）
+### TASK-102: UserRepository 作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 1時間  
-**依存**: TASK-101
+**依存**: TASK-101  
+**ステータス**: DONE
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `UserRepositoryTest.java`
+1. [x] テスト作成: `UserRepositoryTest.java`
    - username で検索テスト
    - 存在しないユーザー検索テスト
-2. [ ] 実装: `UserRepository.java`
+2. [x] 実装: `UserRepository.java`
    - `JpaRepository` 継承
    - `findByUsername` メソッド
 
@@ -159,21 +166,22 @@
 - `backend/src/test/java/com/example/talent/repository/UserRepositoryTest.java`
 
 **テスト**:
-- [ ] 実DBでテストがパス（Testcontainers使用）
+- [x] 実DBでテストがパス（Testcontainers使用）
 
 ---
 
-### TASK-103: AuthenticationService 作成（TDD）
+### TASK-103: AuthenticationService 作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: TASK-102
+**依存**: TASK-102  
+**ステータス**: DONE
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `AuthenticationServiceTest.java`
+1. [x] テスト作成: `AuthenticationServiceTest.java`
    - ログイン成功テスト
    - ログイン失敗テスト（パスワード不一致）
    - ログイン失敗テスト（ユーザー存在しない）
-2. [ ] 実装: `AuthenticationService.java`
+2. [x] 実装: `AuthenticationService.java`
    - `login` メソッド
    - パスワード検証ロジック
 
@@ -182,21 +190,22 @@
 - `backend/src/test/java/com/example/talent/application/AuthenticationServiceTest.java`
 
 **テスト**:
-- [ ] すべてのユニットテストがパス
+- [x] すべてのユニットテストがパス
 
 ---
 
-### TASK-104: AuthController 作成（TDD）
+### TASK-104: AuthController 作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: TASK-103
+**依存**: TASK-103  
+**ステータス**: DONE
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `AuthControllerTest.java`
+1. [x] テスト作成: `AuthControllerTest.java`
    - POST /api/auth/login 成功テスト
    - POST /api/auth/login 失敗テスト
    - POST /api/auth/logout テスト
-2. [ ] 実装: `AuthController.java`
+2. [x] 実装: `AuthController.java`
    - ログインエンドポイント
    - ログアウトエンドポイント
    - セッション管理
@@ -206,28 +215,29 @@
 - `backend/src/test/java/com/example/talent/controller/AuthControllerTest.java`
 
 **テスト**:
-- [ ] MockMvc でテストがパス
+- [x] MockMvc でテストがパス
 
 ---
 
-### TASK-105: Spring Security 設定
+### TASK-105: Spring Security 設定 ✅
 **優先度**: 最高  
 **見積**: 2時間  
-**依存**: TASK-104
+**依存**: TASK-104  
+**ステータス**: DONE
 
 **作業内容**:
-- [ ] SecurityConfig 作成
+- [x] SecurityConfig 作成
   - セッションベース認証設定
   - CSRF 設定
   - 認証不要パス設定（/api/auth/login）
-- [ ] セッションタイムアウト設定（30分）
+- [x] セッションタイムアウト設定（30分）
 
 **成果物**:
 - `backend/src/main/java/com/example/talent/config/SecurityConfig.java`
 
 **テスト**:
-- [ ] 認証なしでアクセス拒否確認
-- [ ] ログイン後アクセス可能確認
+- [x] 認証なしでアクセス拒否確認
+- [x] ログイン後アクセス可能確認
 
 ---
 
