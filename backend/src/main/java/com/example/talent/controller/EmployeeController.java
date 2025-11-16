@@ -1,21 +1,29 @@
 package com.example.talent.controller;
 
+import com.example.talent.application.EmployeeDetailService;
 import com.example.talent.application.EmployeeSearchService;
 import com.example.talent.domain.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
     private final EmployeeSearchService employeeSearchService;
+    private final EmployeeDetailService employeeDetailService;
 
-    public EmployeeController(EmployeeSearchService employeeSearchService) {
+    public EmployeeController(EmployeeSearchService employeeSearchService,
+                              EmployeeDetailService employeeDetailService) {
         this.employeeSearchService = employeeSearchService;
+        this.employeeDetailService = employeeDetailService;
     }
 
     @GetMapping
@@ -32,5 +40,16 @@ public class EmployeeController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("fullName"));
         return employeeSearchService.search(fullName, fullNameKana, employeeCode, 
                 email, position, employmentType, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        try {
+            Employee employee = employeeDetailService.findById(id);
+            return ResponseEntity.ok(employee);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
 }

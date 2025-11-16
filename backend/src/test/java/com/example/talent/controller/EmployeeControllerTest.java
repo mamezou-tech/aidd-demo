@@ -39,6 +39,9 @@ class EmployeeControllerTest {
     @MockBean
     private EmployeeSearchService employeeSearchService;
 
+    @MockBean
+    private com.example.talent.application.EmployeeDetailService employeeDetailService;
+
     @Configuration
     @EnableWebSecurity
     static class TestSecurityConfig {
@@ -113,5 +116,32 @@ class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].position").value("課長"))
                 .andExpect(jsonPath("$.content[0].employmentType").value("正社員"));
+    }
+
+    @Test
+    void IDで社員詳細を取得できる() throws Exception {
+        // Given
+        Employee employee = new Employee("E001", "田中 太郎", "ﾀﾅｶ ﾀﾛｳ",
+                "tanaka@example.com", "課長", "正社員", LocalDate.of(2020, 4, 1));
+        when(employeeDetailService.findById(1L)).thenReturn(employee);
+
+        // When & Then
+        mockMvc.perform(get("/api/employees/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.employeeCode").value("E001"))
+                .andExpect(jsonPath("$.fullName").value("田中 太郎"))
+                .andExpect(jsonPath("$.position").value("課長"));
+    }
+
+    @Test
+    void 存在しない社員IDで404エラー() throws Exception {
+        // Given
+        when(employeeDetailService.findById(999L))
+                .thenThrow(new RuntimeException("社員が見つかりません。ID: 999"));
+
+        // When & Then
+        mockMvc.perform(get("/api/employees/999"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("社員が見つかりません。ID: 999"));
     }
 }

@@ -32,6 +32,9 @@ class AuthControllerTest {
     @MockBean
     private AuthenticationService authenticationService;
 
+    @MockBean
+    private org.springframework.security.web.context.SecurityContextRepository securityContextRepository;
+
     @Configuration
     @EnableWebSecurity
     static class TestSecurityConfig {
