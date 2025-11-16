@@ -398,78 +398,62 @@ class EmployeeRepositoryTest {
 
 ## 5. ローカル開発環境（Docker Compose）
 
-### 5.1 docker-compose.yml
+### 5.1 コンテナ構成
 
-```yaml
-version: '3.8'
+docker-compose.ymlで3つのモードを提供：
 
-services:
-  mysql:
-    image: mysql:8.0
-    container_name: talent-mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: talent_management
-      MYSQL_USER: talent_user
-      MYSQL_PASSWORD: talent_pass
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./backend/src/main/resources/db/migration:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: talent-backend
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/talent_management
-      SPRING_DATASOURCE_USERNAME: talent_user
-      SPRING_DATASOURCE_PASSWORD: talent_pass
-    depends_on:
-      mysql:
-        condition: service_healthy
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: talent-frontend
-    ports:
-      - "3000:3000"
-    environment:
-      REACT_APP_API_URL: http://localhost:8080
-    depends_on:
-      - backend
-
-volumes:
-  mysql_data:
-```
-
-### 5.2 起動手順
-
+#### デフォルトモード（開発用）
 ```bash
-# 全サービス起動
-docker-compose up -d
-
-# ログ確認
-docker-compose logs -f
-
-# 停止
-docker-compose down
-
-# データ削除して再起動
-docker-compose down -v
 docker-compose up -d
 ```
+- **起動**: `mysql` のみ
+- **用途**: devcontainer内で開発
+- **接続**: `localhost:3306`
+
+#### 本番モード
+```bash
+docker-compose --profile prod up -d
+```
+- **起動**: `mysql` + `backend` + `frontend`
+- **用途**: 本番環境の動作確認
+- **接続**: Docker Network経由
+
+#### 開発コンテナモード
+```bash
+docker-compose --profile dev up -d
+```
+- **起動**: `devcontainer` + `mysql`
+- **用途**: VS Code devcontainer使用時
+- **接続**: `localhost:3306`
+
+### 5.2 サービス定義
+
+| サービス | プロファイル | ポート | 説明 |
+|---------|-------------|--------|------|
+| mysql | (常時) | 3306 | データベース |
+| backend | prod | 8080 | Spring Boot API |
+| frontend | prod | 80 | React アプリ |
+| devcontainer | dev | - | 開発環境 |
+
+### 5.3 ネットワーク設計
+
+#### 開発時
+```
+devcontainer内プロセス
+  └─ jdbc:mysql://localhost:3306 (ポートマッピング)
+```
+
+#### 本番時
+```
+Docker Network: talent-management-network
+  backend → mysql:3306
+  frontend → backend:8080
+```
+
+### 5.4 ボリューム
+
+- `mysql_data`: データベースデータ永続化
+- `backend_logs`: アプリケーションログ（本番モード）
 
 ---
 
