@@ -338,10 +338,12 @@
 
 ## Phase 4: 社員検索機能（3日）
 
-### TASK-301: Employee エンティティ作成（TDD）
+### TASK-301: Employee エンティティ作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 1時間  
 **依存**: TASK-002
+**ステータス**: DONE
+
 
 **作業内容（テストファースト）**:
 1. [ ] テスト作成: `EmployeeTest.java`
@@ -358,7 +360,7 @@
 **テスト**:
 - [ ] すべてのユニットテストがパス
 
----
+### TASK-302: EmployeeRepository 作成（TDD） ✅
 
 ### TASK-302: EmployeeRepository 作成（TDD）
 **優先度**: 最高  
@@ -386,7 +388,7 @@
 ---
 
 ### TASK-303: EmployeeSpecification 作成（TDD）
-**優先度**: 最高  
+### TASK-303: EmployeeSpecification 作成（TDD） ✅
 **見積**: 2時間  
 **依存**: TASK-302
 
