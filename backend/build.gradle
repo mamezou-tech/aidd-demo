@@ -32,3 +32,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    forkEvery = 0
+}
