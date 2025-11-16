@@ -503,7 +503,7 @@
 - `backend/src/test/java/com/example/talent/application/EmployeeDetailServiceTest.java`
 
 **テスト**:
-- [ ] すべてのユニットテストがパス
+- [x] すべてのユニットテストがパス
 
 ---
 
@@ -523,7 +523,7 @@
 - `EmployeeController.java` 更新
 
 **テスト**:
-- [ ] MockMvc でテストがパス
+- [x] MockMvc でテストがパス
 
 ---
 
@@ -542,9 +542,9 @@
 - `frontend/src/pages/EmployeeDetailPage.tsx`
 
 **テスト**:
-- [ ] 詳細表示確認
-- [ ] 検索画面へ戻る動作確認（検索条件クリア）
-- [ ] ホームへ戻る動作確認
+- [x] 詳細表示確認
+- [x] 検索画面へ戻る動作確認（検索条件クリア）
+- [x] ホームへ戻る動作確認
 
 ---
 
