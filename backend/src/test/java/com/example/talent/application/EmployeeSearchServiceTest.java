@@ -50,7 +50,7 @@ class EmployeeSearchServiceTest {
         when(employeeRepository.findAll(any(Specification.class), eq(pageRequest))).thenReturn(page);
 
         // When
-        Page<Employee> result = employeeSearchService.search(null, null, null, null, null, 0, 20);
+        Page<Employee> result = employeeSearchService.search(null, null, null, null, null, null, pageRequest);
 
         // Then
         assertThat(result.getContent()).hasSize(2);
@@ -64,7 +64,7 @@ class EmployeeSearchServiceTest {
         when(employeeRepository.findAll(any(Specification.class), eq(pageRequest))).thenReturn(page);
 
         // When
-        Page<Employee> result = employeeSearchService.search("田中", null, null, null, null, 0, 20);
+        Page<Employee> result = employeeSearchService.search("田中", null, null, null, null, null, pageRequest);
 
         // Then
         assertThat(result.getContent()).hasSize(1);

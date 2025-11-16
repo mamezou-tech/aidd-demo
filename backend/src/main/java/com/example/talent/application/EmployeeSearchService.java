@@ -19,16 +19,17 @@ public class EmployeeSearchService {
     }
 
     public Page<Employee> search(String name, String nameKana, String employeeCode, 
-                                  String email, String position, int page, int size) {
+                                  String email, String position, String employmentType,
+                                  org.springframework.data.domain.Pageable pageable) {
         Specification<Employee> spec = Specification
                 .where(EmployeeSpecification.hasFullName(name))
                 .and(EmployeeSpecification.hasFullNameKana(nameKana))
                 .and(EmployeeSpecification.hasEmployeeCode(employeeCode))
                 .and(EmployeeSpecification.hasEmail(email))
                 .and(EmployeeSpecification.hasPosition(position))
+                .and(EmployeeSpecification.hasEmploymentType(employmentType))
                 .and(EmployeeSpecification.isNotDeleted());
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("fullName"));
-        return employeeRepository.findAll(spec, pageRequest);
+        return employeeRepository.findAll(spec, pageable);
     }
 }

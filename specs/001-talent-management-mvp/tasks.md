@@ -434,16 +434,16 @@
 
 ---
 
-### TASK-305: EmployeeController 作成（TDD）
+### TASK-305: EmployeeController 作成（TDD） ✅
 **優先度**: 最高  
 **見積**: 2時間  
 **依存**: TASK-304
 
 **作業内容（テストファースト）**:
-1. [ ] テスト作成: `EmployeeControllerTest.java`
+1. [x] テスト作成: `EmployeeControllerTest.java`
    - GET /api/employees テスト（各検索条件）
    - ページネーションテスト
-2. [ ] 実装: `EmployeeController.java`
+2. [x] 実装: `EmployeeController.java`
    - 検索エンドポイント
    - リクエスト/レスポンス変換
 
