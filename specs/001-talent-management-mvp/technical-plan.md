@@ -561,9 +561,7 @@ Docker Network: talent-management-network
 - Git
 
 ### 10.2 推奨IDE
-- IntelliJ IDEA（バックエンド）
-- VS Code（フロントエンド）
+- VS Code
 
 ### 10.3 ブラウザ
 - Chrome（最新版）
-- Firefox（最新版）
