@@ -18,6 +18,25 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+	main {
+		java {
+			srcDirs = ['backend/src/main/java']
+		}
+		resources {
+			srcDirs = ['backend/src/main/resources']
+		}
+	}
+	test {
+		java {
+			srcDirs = ['backend/src/test/java']
+		}
+		resources {
+			srcDirs = ['backend/src/test/resources']
+		}
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -42,6 +61,9 @@ dependencies {
 	// テスト
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.testcontainers:testcontainers:1.20.4'
+	testImplementation 'org.testcontainers:mysql:1.20.4'
+	testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

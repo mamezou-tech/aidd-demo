@@ -39,3 +39,18 @@ out/
 ### Claude Code ###
 .claude/
 
+### Node.js ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### Frontend Build & Test ###
+frontend/dist/
+frontend/test-results/
+playwright-report/
+.playwright/
+
+### Logs ###
+*.log
+
