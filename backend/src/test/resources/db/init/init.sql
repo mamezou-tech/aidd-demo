@@ -1,0 +1,222 @@
+-- ユーザーテーブル
+CREATE TABLE users (
+    user_id VARCHAR(20) PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ja_0900_as_cs;
+
+-- 組織テーブル
+CREATE TABLE organizations (
+    organization_id VARCHAR(20) PRIMARY KEY,
+    organization_name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ja_0900_as_cs;
+
+-- 社員テーブル
+CREATE TABLE employees (
+    employee_id VARCHAR(20) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    organization_id VARCHAR(20) NOT NULL,
+    position VARCHAR(50) NOT NULL,
+    employment_type VARCHAR(20) NOT NULL,
+    hire_date DATE NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    photo_path VARCHAR(500),
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (organization_id) REFERENCES organizations(organization_id),
+    INDEX idx_name (name),
+    INDEX idx_organization (organization_id),
+    INDEX idx_deleted (deleted)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ja_0900_as_cs;
+
+-- スキルテーブル
+CREATE TABLE skills (
+    skill_id VARCHAR(20) PRIMARY KEY,
+    skill_name VARCHAR(100) NOT NULL UNIQUE,
+    category VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ja_0900_as_cs;
+
+-- 社員スキルテーブル
+CREATE TABLE employee_skills (
+    employee_id VARCHAR(20),
+    skill_id VARCHAR(20),
+    level INT NOT NULL CHECK (level BETWEEN 1 AND 5),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (employee_id, skill_id),
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
+    FOREIGN KEY (skill_id) REFERENCES skills(skill_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ja_0900_as_cs;
+-- テストユーザー（パスワード: password）
+INSERT INTO users (user_id, email, password_hash, name) VALUES
+('U001', 'test@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'テストユーザー');
+
+-- 組織データ
+INSERT INTO organizations (organization_id, organization_name) VALUES
+('ORG001', '経営企画部'),
+('ORG002', '人事部'),
+('ORG003', '総務部'),
+('ORG004', '開発部'),
+('ORG005', '営業部'),
+('ORG006', 'マーケティング部'),
+('ORG007', '財務部'),
+('ORG008', '法務部'),
+('ORG009', '情報システム部'),
+('ORG010', 'カスタマーサポート部');
+
+-- スキルデータ
+INSERT INTO skills (skill_id, skill_name, category) VALUES
+('SK001', 'Java', 'プログラミング言語'),
+('SK002', 'Python', 'プログラミング言語'),
+('SK003', 'JavaScript', 'プログラミング言語'),
+('SK004', 'TypeScript', 'プログラミング言語'),
+('SK005', 'Go', 'プログラミング言語'),
+('SK006', 'AWS', 'クラウド'),
+('SK007', 'Azure', 'クラウド'),
+('SK008', 'GCP', 'クラウド'),
+('SK009', 'Docker', 'インフラ'),
+('SK010', 'Kubernetes', 'インフラ'),
+('SK011', 'React', 'フロントエンド'),
+('SK012', 'Vue.js', 'フロントエンド'),
+('SK013', 'Spring Boot', 'フレームワーク'),
+('SK014', 'Django', 'フレームワーク'),
+('SK015', 'MySQL', 'データベース'),
+('SK016', 'PostgreSQL', 'データベース'),
+('SK017', 'MongoDB', 'データベース'),
+('SK018', 'プロジェクトマネジメント', 'マネジメント'),
+('SK019', 'アジャイル開発', 'マネジメント'),
+('SK020', 'セキュリティ', 'セキュリティ');
+
+-- 社員データ（100件）
+INSERT INTO employees (employee_id, name, organization_id, position, employment_type, hire_date, email, photo_path) VALUES
+('E001', '山田太郎', 'ORG004', 'エンジニア', '正社員', '2020-04-01', 'yamada.taro@example.com', '/photos/E001.jpg'),
+('E002', '佐藤花子', 'ORG004', 'エンジニア', '正社員', '2019-04-01', 'sato.hanako@example.com', '/photos/E002.jpg'),
+('E003', '鈴木一郎', 'ORG004', 'シニアエンジニア', '正社員', '2018-04-01', 'suzuki.ichiro@example.com', '/photos/E003.jpg'),
+('E004', '高橋美咲', 'ORG004', 'エンジニア', '正社員', '2021-04-01', 'takahashi.misaki@example.com', '/photos/E004.jpg'),
+('E005', '田中健太', 'ORG004', 'テックリード', '正社員', '2017-04-01', 'tanaka.kenta@example.com', '/photos/E005.jpg'),
+('E006', '伊藤さくら', 'ORG005', '営業', '正社員', '2020-04-01', 'ito.sakura@example.com', '/photos/E006.jpg'),
+('E007', '渡辺大輔', 'ORG005', '営業', '正社員', '2019-04-01', 'watanabe.daisuke@example.com', '/photos/E007.jpg'),
+('E008', '中村愛', 'ORG005', 'マネージャー', '正社員', '2016-04-01', 'nakamura.ai@example.com', '/photos/E008.jpg'),
+('E009', '小林翔太', 'ORG005', '営業', '契約社員', '2021-04-01', 'kobayashi.shota@example.com', '/photos/E009.jpg'),
+('E010', '加藤優子', 'ORG005', '営業', '正社員', '2020-04-01', 'kato.yuko@example.com', '/photos/E010.jpg'),
+('E011', '吉田拓也', 'ORG002', '人事', '正社員', '2019-04-01', 'yoshida.takuya@example.com', NULL),
+('E012', '山本真理', 'ORG002', '人事', '正社員', '2018-04-01', 'yamamoto.mari@example.com', NULL),
+('E013', '松本健', 'ORG002', 'マネージャー', '正社員', '2015-04-01', 'matsumoto.ken@example.com', NULL),
+('E014', '井上美穂', 'ORG002', '人事', '正社員', '2020-04-01', 'inoue.miho@example.com', NULL),
+('E015', '木村大樹', 'ORG002', '人事', '契約社員', '2021-04-01', 'kimura.daiki@example.com', NULL),
+('E016', '林由美', 'ORG006', 'マーケター', '正社員', '2019-04-01', 'hayashi.yumi@example.com', NULL),
+('E017', '斎藤隆', 'ORG006', 'マーケター', '正社員', '2020-04-01', 'saito.takashi@example.com', NULL),
+('E018', '清水麻衣', 'ORG006', 'マネージャー', '正社員', '2017-04-01', 'shimizu.mai@example.com', NULL),
+('E019', '山口直樹', 'ORG006', 'マーケター', '正社員', '2021-04-01', 'yamaguchi.naoki@example.com', NULL),
+('E020', '森田彩', 'ORG006', 'マーケター', '契約社員', '2021-04-01', 'morita.aya@example.com', NULL),
+('E021', '池田誠', 'ORG009', 'インフラエンジニア', '正社員', '2018-04-01', 'ikeda.makoto@example.com', NULL),
+('E022', '橋本恵', 'ORG009', 'インフラエンジニア', '正社員', '2019-04-01', 'hashimoto.megumi@example.com', NULL),
+('E023', '山崎勇', 'ORG009', 'マネージャー', '正社員', '2016-04-01', 'yamazaki.isamu@example.com', NULL),
+('E024', '石川奈々', 'ORG009', 'インフラエンジニア', '正社員', '2020-04-01', 'ishikawa.nana@example.com', NULL),
+('E025', '前田浩', 'ORG009', 'インフラエンジニア', '正社員', '2021-04-01', 'maeda.hiroshi@example.com', NULL),
+('E026', '藤田美香', 'ORG010', 'サポート', '正社員', '2020-04-01', 'fujita.mika@example.com', NULL),
+('E027', '岡田剛', 'ORG010', 'サポート', '正社員', '2019-04-01', 'okada.tsuyoshi@example.com', NULL),
+('E028', '長谷川舞', 'ORG010', 'マネージャー', '正社員', '2017-04-01', 'hasegawa.mai@example.com', NULL),
+('E029', '村上健二', 'ORG010', 'サポート', '契約社員', '2021-04-01', 'murakami.kenji@example.com', NULL),
+('E030', '近藤千春', 'ORG010', 'サポート', '正社員', '2020-04-01', 'kondo.chiharu@example.com', NULL),
+('E031', '坂本龍一', 'ORG001', '企画', '正社員', '2018-04-01', 'sakamoto.ryuichi@example.com', NULL),
+('E032', '遠藤美咲', 'ORG001', '企画', '正社員', '2019-04-01', 'endo.misaki@example.com', NULL),
+('E033', '青木誠', 'ORG001', 'マネージャー', '正社員', '2015-04-01', 'aoki.makoto@example.com', NULL),
+('E034', '藤井優', 'ORG001', '企画', '正社員', '2020-04-01', 'fujii.yu@example.com', NULL),
+('E035', '西村愛子', 'ORG001', '企画', '契約社員', '2021-04-01', 'nishimura.aiko@example.com', NULL),
+('E036', '福田大輔', 'ORG003', '総務', '正社員', '2019-04-01', 'fukuda.daisuke@example.com', NULL),
+('E037', '太田真由美', 'ORG003', '総務', '正社員', '2018-04-01', 'ota.mayumi@example.com', NULL),
+('E038', '三浦健', 'ORG003', 'マネージャー', '正社員', '2016-04-01', 'miura.ken@example.com', NULL),
+('E039', '岡本彩香', 'ORG003', '総務', '正社員', '2020-04-01', 'okamoto.ayaka@example.com', NULL),
+('E040', '松田拓也', 'ORG003', '総務', '契約社員', '2021-04-01', 'matsuda.takuya@example.com', NULL),
+('E041', '竹内美穂', 'ORG007', '財務', '正社員', '2018-04-01', 'takeuchi.miho@example.com', NULL),
+('E042', '金子隆', 'ORG007', '財務', '正社員', '2019-04-01', 'kaneko.takashi@example.com', NULL),
+('E043', '中島麻衣', 'ORG007', 'マネージャー', '正社員', '2015-04-01', 'nakajima.mai@example.com', NULL),
+('E044', '原田直樹', 'ORG007', '財務', '正社員', '2020-04-01', 'harada.naoki@example.com', NULL),
+('E045', '小川彩', 'ORG007', '財務', '契約社員', '2021-04-01', 'ogawa.aya@example.com', NULL),
+('E046', '浜田誠', 'ORG008', '法務', '正社員', '2017-04-01', 'hamada.makoto@example.com', NULL),
+('E047', '石田恵', 'ORG008', '法務', '正社員', '2018-04-01', 'ishida.megumi@example.com', NULL),
+('E048', '森勇', 'ORG008', 'マネージャー', '正社員', '2014-04-01', 'mori.isamu@example.com', NULL),
+('E049', '上田奈々', 'ORG008', '法務', '正社員', '2019-04-01', 'ueda.nana@example.com', NULL),
+('E050', '杉山浩', 'ORG008', '法務', '正社員', '2020-04-01', 'sugiyama.hiroshi@example.com', NULL),
+('E051', '内田美香', 'ORG004', 'エンジニア', '正社員', '2020-04-01', 'uchida.mika@example.com', NULL),
+('E052', '大野剛', 'ORG004', 'エンジニア', '正社員', '2019-04-01', 'ono.tsuyoshi@example.com', NULL),
+('E053', '柴田舞', 'ORG004', 'エンジニア', '契約社員', '2021-04-01', 'shibata.mai@example.com', NULL),
+('E054', '宮崎健二', 'ORG004', 'シニアエンジニア', '正社員', '2017-04-01', 'miyazaki.kenji@example.com', NULL),
+('E055', '酒井千春', 'ORG004', 'エンジニア', '正社員', '2020-04-01', 'sakai.chiharu@example.com', NULL),
+('E056', '横山龍一', 'ORG005', '営業', '正社員', '2019-04-01', 'yokoyama.ryuichi@example.com', NULL),
+('E057', '野口美咲', 'ORG005', '営業', '正社員', '2020-04-01', 'noguchi.misaki@example.com', NULL),
+('E058', '安田誠', 'ORG005', '営業', '契約社員', '2021-04-01', 'yasuda.makoto@example.com', NULL),
+('E059', '増田優', 'ORG005', '営業', '正社員', '2019-04-01', 'masuda.yu@example.com', NULL),
+('E060', '小野愛子', 'ORG005', '営業', '正社員', '2020-04-01', 'ono.aiko@example.com', NULL),
+('E061', '今井大輔', 'ORG002', '人事', '正社員', '2019-04-01', 'imai.daisuke@example.com', NULL),
+('E062', '河野真由美', 'ORG002', '人事', '正社員', '2020-04-01', 'kono.mayumi@example.com', NULL),
+('E063', '平野健', 'ORG002', '人事', '契約社員', '2021-04-01', 'hirano.ken@example.com', NULL),
+('E064', '北村彩香', 'ORG002', '人事', '正社員', '2019-04-01', 'kitamura.ayaka@example.com', NULL),
+('E065', '久保拓也', 'ORG002', '人事', '正社員', '2020-04-01', 'kubo.takuya@example.com', NULL),
+('E066', '榊原美穂', 'ORG006', 'マーケター', '正社員', '2019-04-01', 'sakakibara.miho@example.com', NULL),
+('E067', '新井隆', 'ORG006', 'マーケター', '正社員', '2020-04-01', 'arai.takashi@example.com', NULL),
+('E068', '菊地麻衣', 'ORG006', 'マーケター', '契約社員', '2021-04-01', 'kikuchi.mai@example.com', NULL),
+('E069', '秋山直樹', 'ORG006', 'マーケター', '正社員', '2019-04-01', 'akiyama.naoki@example.com', NULL),
+('E070', '水野彩', 'ORG006', 'マーケター', '正社員', '2020-04-01', 'mizuno.aya@example.com', NULL),
+('E071', '古川誠', 'ORG009', 'インフラエンジニア', '正社員', '2018-04-01', 'furukawa.makoto@example.com', NULL),
+('E072', '川口恵', 'ORG009', 'インフラエンジニア', '正社員', '2019-04-01', 'kawaguchi.megumi@example.com', NULL),
+('E073', '須藤勇', 'ORG009', 'インフラエンジニア', '契約社員', '2021-04-01', 'sudo.isamu@example.com', NULL),
+('E074', '谷口奈々', 'ORG009', 'インフラエンジニア', '正社員', '2020-04-01', 'taniguchi.nana@example.com', NULL),
+('E075', '片岡浩', 'ORG009', 'インフラエンジニア', '正社員', '2019-04-01', 'kataoka.hiroshi@example.com', NULL),
+('E076', '大塚美香', 'ORG010', 'サポート', '正社員', '2019-04-01', 'otsuka.mika@example.com', NULL),
+('E077', '関剛', 'ORG010', 'サポート', '正社員', '2020-04-01', 'seki.tsuyoshi@example.com', NULL),
+('E078', '萩原舞', 'ORG010', 'サポート', '契約社員', '2021-04-01', 'hagiwara.mai@example.com', NULL),
+('E079', '丸山健二', 'ORG010', 'サポート', '正社員', '2019-04-01', 'maruyama.kenji@example.com', NULL),
+('E080', '岩崎千春', 'ORG010', 'サポート', '正社員', '2020-04-01', 'iwasaki.chiharu@example.com', NULL),
+('E081', '高木龍一', 'ORG001', '企画', '正社員', '2018-04-01', 'takagi.ryuichi@example.com', NULL),
+('E082', '島田美咲', 'ORG001', '企画', '正社員', '2019-04-01', 'shimada.misaki@example.com', NULL),
+('E083', '本田誠', 'ORG001', '企画', '契約社員', '2021-04-01', 'honda.makoto@example.com', NULL),
+('E084', '永井優', 'ORG001', '企画', '正社員', '2020-04-01', 'nagai.yu@example.com', NULL),
+('E085', '松尾愛子', 'ORG001', '企画', '正社員', '2019-04-01', 'matsuo.aiko@example.com', NULL),
+('E086', '西田大輔', 'ORG003', '総務', '正社員', '2019-04-01', 'nishida.daisuke@example.com', NULL),
+('E087', '千葉真由美', 'ORG003', '総務', '正社員', '2020-04-01', 'chiba.mayumi@example.com', NULL),
+('E088', '桜井健', 'ORG003', '総務', '契約社員', '2021-04-01', 'sakurai.ken@example.com', NULL),
+('E089', '五十嵐彩香', 'ORG003', '総務', '正社員', '2019-04-01', 'igarashi.ayaka@example.com', NULL),
+('E090', '市川拓也', 'ORG003', '総務', '正社員', '2020-04-01', 'ichikawa.takuya@example.com', NULL),
+('E091', '服部美穂', 'ORG007', '財務', '正社員', '2018-04-01', 'hattori.miho@example.com', NULL),
+('E092', '吉川隆', 'ORG007', '財務', '正社員', '2019-04-01', 'yoshikawa.takashi@example.com', NULL),
+('E093', '工藤麻衣', 'ORG007', '財務', '契約社員', '2021-04-01', 'kudo.mai@example.com', NULL),
+('E094', '山下直樹', 'ORG007', '財務', '正社員', '2020-04-01', 'yamashita.naoki@example.com', NULL),
+('E095', '武田彩', 'ORG007', '財務', '正社員', '2019-04-01', 'takeda.aya@example.com', NULL),
+('E096', '上野誠', 'ORG008', '法務', '正社員', '2017-04-01', 'ueno.makoto@example.com', NULL),
+('E097', '大橋恵', 'ORG008', '法務', '正社員', '2018-04-01', 'ohashi.megumi@example.com', NULL),
+('E098', '平井勇', 'ORG008', '法務', '契約社員', '2021-04-01', 'hirai.isamu@example.com', NULL),
+('E099', '岩田奈々', 'ORG008', '法務', '正社員', '2019-04-01', 'iwata.nana@example.com', NULL),
+('E100', '原浩', 'ORG008', '法務', '正社員', '2020-04-01', 'hara.hiroshi@example.com', NULL);
+
+-- 社員スキルデータ（開発部のエンジニアにスキルを割り当て）
+INSERT INTO employee_skills (employee_id, skill_id, level) VALUES
+('E001', 'SK001', 4), ('E001', 'SK006', 3), ('E001', 'SK013', 4),
+('E002', 'SK003', 4), ('E002', 'SK011', 4), ('E002', 'SK015', 3),
+('E003', 'SK001', 5), ('E003', 'SK006', 4), ('E003', 'SK013', 5), ('E003', 'SK019', 4),
+('E004', 'SK002', 3), ('E004', 'SK008', 3), ('E004', 'SK014', 3),
+('E005', 'SK001', 5), ('E005', 'SK006', 5), ('E005', 'SK009', 4), ('E005', 'SK010', 4), ('E005', 'SK018', 5),
+('E051', 'SK004', 4), ('E051', 'SK011', 4), ('E051', 'SK006', 3),
+('E052', 'SK001', 4), ('E052', 'SK015', 4), ('E052', 'SK013', 4),
+('E053', 'SK003', 3), ('E053', 'SK012', 3),
+('E054', 'SK001', 5), ('E054', 'SK006', 4), ('E054', 'SK020', 4),
+('E055', 'SK002', 4), ('E055', 'SK017', 3), ('E055', 'SK014', 4),
+('E021', 'SK009', 5), ('E021', 'SK010', 4), ('E021', 'SK006', 4),
+('E022', 'SK009', 4), ('E022', 'SK007', 3), ('E022', 'SK015', 4),
+('E023', 'SK009', 5), ('E023', 'SK010', 5), ('E023', 'SK006', 5), ('E023', 'SK018', 4),
+('E024', 'SK009', 3), ('E024', 'SK006', 3), ('E024', 'SK020', 3),
+('E025', 'SK010', 4), ('E025', 'SK008', 3), ('E025', 'SK009', 4),
+('E071', 'SK009', 4), ('E071', 'SK015', 4), ('E071', 'SK020', 3),
+('E072', 'SK009', 3), ('E072', 'SK006', 3),
+('E073', 'SK009', 3), ('E073', 'SK010', 2),
+('E074', 'SK010', 4), ('E074', 'SK007', 3), ('E074', 'SK020', 4),
+('E075', 'SK009', 4), ('E075', 'SK006', 4), ('E075', 'SK015', 3);

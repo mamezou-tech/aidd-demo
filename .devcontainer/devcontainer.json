@@ -23,8 +23,8 @@
     }
   },
 
-  // Install uv, spec-kit, and Amazon Q Developer CLI after container creation
-  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.cargo/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli && curl --proto '=https' --tlsv1.2 -sSf https://desktop-release.q.us-east-1.amazonaws.com/latest/q-x86_64-linux.zip -o /tmp/q.zip && unzip -q /tmp/q.zip -d /tmp && /tmp/q/install.sh && rm -rf /tmp/q.zip /tmp/q",
+  // Install uv, spec-kit, and Amazon Q Developer CLI v1.19.7 after container creation
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.cargo/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli && curl --proto '=https' --tlsv1.2 -sSf https://desktop-release.q.us-east-1.amazonaws.com/1.19.7/q-x86_64-linux.zip -o /tmp/q.zip && unzip -q /tmp/q.zip -d /tmp && /tmp/q/install.sh --no-confirm && rm -rf /tmp/q.zip /tmp/q",
 
   // Forward ports for Spring Boot and MySQL
   "forwardPorts": [8080, 3306],
