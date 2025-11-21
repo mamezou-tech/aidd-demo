@@ -131,7 +131,7 @@ npm install
 npm run dev
 ```
 
-フロントエンドは `http://localhost:5173` で起動します。
+フロントエンドは `http://localhost:3000` で起動します。
 
 ---
 
@@ -152,10 +152,10 @@ curl http://localhost:8080/actuator/health
 
 ### フロントエンドへのアクセス
 
-ブラウザで `http://localhost:5173` にアクセス
+ブラウザで `http://localhost:3000` にアクセス
 
 **ログイン情報**:
-- ユーザー名: `admin`
+- メールアドレス: `test@example.com`
 - パスワード: `password`
 
 ### 主な機能
