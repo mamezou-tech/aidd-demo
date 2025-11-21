@@ -50,7 +50,7 @@
 - **Docker Engine**: Dev Container起動時、「開発コンテナーでは、Dockerを実行する必要があります。WSLにDockerをインストールしますか？」という確認ダイアログが表示されます。インストールを選択すれば自動的にインストールされます。
 - **Java 17 + Gradle**: Dev Container起動時に自動インストールされます。
 - **Node.js 20 LTS**: Dev Container起動時に自動インストールされます。
-- **Amazon Q Developer CLI**: Dev Container起動時に自動インストールされます。
+- **Amazon Q Developer CLI v1.19.7**: Dev Container起動時に自動インストールされます。
 - **spec-kit (specify-cli)**: Dev Container起動時に自動インストールされます。
 - **AWS CLI**: Dev Container起動時に自動インストールされます。
 
@@ -350,7 +350,7 @@ rm -rf node_modules dist test-results
 - **Docker** - Apache License 2.0
 
 ### 開発ツール
-- **Amazon Q Developer CLI** - MIT License / Apache License 2.0（デュアルライセンス）
+- **Amazon Q Developer CLI v1.19.7** - MIT License / Apache License 2.0（デュアルライセンス）
 - **spec-kit** - MIT License
 
 詳細な依存関係は [build.gradle](build.gradle) と [frontend/package.json](frontend/package.json) を参照してください。
