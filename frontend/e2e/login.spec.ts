@@ -3,11 +3,11 @@ import { test, expect } from '@playwright/test';
 test.describe('Login Flow', () => {
   test('should login successfully with valid credentials', async ({ page }) => {
     await page.goto('/login');
-    
+
     await page.fill('input[type="email"]', 'test@example.com');
-    await page.fill('input[type="password"]', 'password');
+    await page.fill('input[type="password"]', 'aiddTest');
     await page.click('button[type="submit"]');
-    
+
     await page.waitForURL('/employees', { timeout: 10000 });
     await expect(page).toHaveURL('/employees');
   });
