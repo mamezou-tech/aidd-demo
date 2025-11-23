@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         log.debug("Login attempt for email: {}", request.email());
         return authService.authenticate(request.email(), request.password())
                 .map(user -> {
@@ -32,10 +32,12 @@ public class AuthController {
                 })
                 .orElseGet(() -> {
                     log.debug("Authentication failed for: {}", request.email());
-                    return ResponseEntity.status(401).build();
+                    String errorMessage = authService.getAuthenticationFailureReason(request.email());
+                    return ResponseEntity.status(401).body(new ErrorResponse(errorMessage));
                 });
     }
 
     record LoginRequest(String email, String password) {}
     record LoginResponse(String userId, String email, String name, String token) {}
+    record ErrorResponse(String message) {}
 }

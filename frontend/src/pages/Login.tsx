@@ -14,13 +14,26 @@ export const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       storage.setToken(response.data.token);
       navigate('/employees');
     } catch (err) {
-      setError('認証に失敗しました');
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          // バックエンドからのエラーレスポンス
+          const message = err.response.data?.message || '認証に失敗しました';
+          setError(message);
+        } else if (err.request) {
+          // バックエンドが起動していない場合
+          setError('サーバーに接続できません。バックエンドが起動しているか確認してください。');
+        } else {
+          setError('認証に失敗しました');
+        }
+      } else {
+        setError('認証に失敗しました');
+      }
     } finally {
       setLoading(false);
     }

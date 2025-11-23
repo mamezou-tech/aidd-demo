@@ -35,10 +35,16 @@ public class AuthService {
                     return matches ? user : null;
                 })
                 .filter(user -> user != null);
-        
+
         if (result.isEmpty()) {
             log.debug("Authentication failed - user not found or password mismatch");
         }
         return result;
+    }
+
+    public String getAuthenticationFailureReason(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> "パスワードが正しくありません")
+                .orElse("メールアドレスが登録されていません");
     }
 }
