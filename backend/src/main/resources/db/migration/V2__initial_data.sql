@@ -1,6 +1,6 @@
--- テストユーザー（パスワード: password）
+-- テストユーザー（パスワード: aiddTest）
 INSERT INTO users (user_id, email, password_hash, name) VALUES
-('U001', 'test@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'テストユーザー');
+('U001', 'test@example.com', '$2a$10$ZoJ2Q3xPCLlBgkQ/eW5Me.nQnYWiEwxB.4ZnGB2j9nSRuPYQU0yvO', 'テストユーザー');
 
 -- 組織データ
 INSERT INTO organizations (organization_id, organization_name) VALUES
