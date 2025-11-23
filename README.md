@@ -127,9 +127,10 @@ docker compose ps
 
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
+
+**注**: 依存パッケージは Dev Container 起動時に自動インストールされます。
 
 フロントエンドは `http://localhost:3000` で起動します。
 
@@ -156,7 +157,7 @@ curl http://localhost:8080/actuator/health
 
 **ログイン情報**:
 - メールアドレス: `test@example.com`
-- パスワード: `password`
+- パスワード: `aiddTest`
 
 ### 主な機能
 
@@ -264,6 +265,23 @@ npm install
 **対処法**:
 - `node_modules` を削除して再インストール: `rm -rf node_modules && npm install`
 - バックエンドが起動しているか確認
+
+### ログインできない
+
+**症状**: `test@example.com` / `aiddTest` でログインできない
+
+**確認手順**:
+```bash
+# バックエンドのログを確認
+docker compose logs app | grep "Password match"
+
+# データベースのパスワードハッシュを確認
+docker compose exec mysqldb mysql -uappuser -papppass appdb -e "SELECT email, LEFT(password_hash, 20) FROM users WHERE email='test@example.com';"
+```
+
+**対処法**:
+- データベースを再作成: `docker compose down -v && docker compose up -d --build`
+- パスワードハッシュが正しいか確認（`$2a$10$ZoJ2Q3xPC...` で始まるべき）
 
 ---
 
