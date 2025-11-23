@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SearchForm } from './SearchForm';
 import { EmployeeCard } from './EmployeeCard';
+import { EmployeeTable } from './EmployeeTable';
 import { Spinner } from '../common/Spinner';
 import { Pagination } from '../common/Pagination';
 import styles from './EmployeeList.module.css';
@@ -18,6 +19,7 @@ export const EmployeeList = ({ organizations, skills, onSearch, onSelectEmployee
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchCriteria, setSearchCriteria] = useState<any>(null);
+  const [displayMode, setDisplayMode] = useState<'list' | 'card'>('list');
 
   const handleSearch = async (criteria: any) => {
     setSearchCriteria(criteria);
@@ -34,7 +36,13 @@ export const EmployeeList = ({ organizations, skills, onSearch, onSelectEmployee
     setLoading(true);
     try {
       const result = await onSearch(criteria, page);
-      setEmployees(result.employees);
+      // 組織名マッピングを追加
+      const orgMap = new Map(organizations.map(org => [org.organizationId, org.name]));
+      const employeesWithOrgName = result.employees.map((emp: any) => ({
+        ...emp,
+        organizationName: orgMap.get(emp.organizationId) || emp.organizationId
+      }));
+      setEmployees(employeesWithOrgName);
       setTotalPages(result.totalPages);
     } finally {
       setLoading(false);
@@ -43,22 +51,32 @@ export const EmployeeList = ({ organizations, skills, onSearch, onSelectEmployee
 
   return (
     <div className={styles.container}>
-      <SearchForm organizations={organizations} skills={skills} onSearch={handleSearch} />
+      <SearchForm 
+        organizations={organizations} 
+        skills={skills} 
+        onSearch={handleSearch}
+        displayMode={displayMode}
+        onDisplayModeChange={setDisplayMode}
+      />
       {loading && <Spinner />}
       {!loading && employees.length === 0 && searchCriteria && (
         <div className={styles.noResults}>該当する社員が見つかりません</div>
       )}
       {!loading && employees.length > 0 && (
         <>
-          <div className={styles.grid}>
-            {employees.map(emp => (
-              <EmployeeCard
-                key={emp.employeeId}
-                employee={emp}
-                onClick={() => onSelectEmployee(emp.employeeId)}
-              />
-            ))}
-          </div>
+          {displayMode === 'list' ? (
+            <EmployeeTable employees={employees} onSelectEmployee={onSelectEmployee} />
+          ) : (
+            <div className={styles.grid}>
+              {employees.map(emp => (
+                <EmployeeCard
+                  key={emp.employeeId}
+                  employee={emp}
+                  onClick={() => onSelectEmployee(emp.employeeId)}
+                />
+              ))}
+            </div>
+          )}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

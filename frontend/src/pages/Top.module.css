@@ -1,0 +1,47 @@
+.container {
+  min-height: 100vh;
+}
+
+.header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.logoutButton {
+  padding: 8px 16px;
+}
+
+.main {
+  padding: 20px;
+}
+
+.category {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.categoryTitle {
+  margin: 0 0 15px 0;
+}
+
+.menuButton {
+  padding: 10px 30px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background: #2980b9;
+}

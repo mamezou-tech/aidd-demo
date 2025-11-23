@@ -70,8 +70,11 @@ export const EmployeeSearch = () => {
 
   return (
     <div>
-      <div style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-between' }}>
-        <h1 style={{ margin: 0 }}>社員検索システム</h1>
+      <div style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={() => navigate('/')} style={{ padding: '8px 16px' }}>TOPへ戻る</button>
+          <h1 style={{ margin: 0 }}>社員検索システム</h1>
+        </div>
         <button onClick={handleLogout} style={{ padding: '8px 16px' }}>ログアウト</button>
       </div>
       {error && <div style={{ color: 'red', padding: '10px' }}>{error}</div>}

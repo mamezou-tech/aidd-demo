@@ -177,6 +177,8 @@ CREATE TABLE employee_skills (
 }
 ```
 
+**Note**: ログイン成功後、フロントエンドはtop画面（`/`または`/top`）に遷移する。
+
 ### 4.2 Employee Search & List
 
 #### GET /api/employees
@@ -245,7 +247,9 @@ CREATE TABLE employee_skills (
 #### GET /api/employees/{employeeId}/photo
 **Response** (200 OK): 画像バイナリ (image/jpeg)
 
-**Response** (404 Not Found): デフォルトアバター画像
+**Response** (404 Not Found): 404エラー（フロントエンドで「no image」テキストを表示）
+
+**Note**: 顔写真が存在しない場合や読み込み失敗時、フロントエンドは「no image」という文字列を表示する。
 
 ### 4.5 Master Data
 
@@ -336,11 +340,15 @@ frontend/
 │   │   │   ├── EmployeeList.tsx
 │   │   │   ├── EmployeeCard.tsx
 │   │   │   ├── EmployeeDetail.tsx
+│   │   │   ├── EmployeePhoto.tsx
 │   │   │   └── SearchForm.tsx
 │   │   └── common/
 │   │       ├── Spinner.tsx
-│   │       ├── Pagination.tsx
-│   │       └── Avatar.tsx
+│   │       └── Pagination.tsx
+│   ├── pages/
+│   │   ├── Login.tsx
+│   │   ├── Top.tsx
+│   │   └── EmployeeSearch.tsx
 │   ├── services/
 │   │   ├── authService.ts
 │   │   ├── employeeService.ts
@@ -367,11 +375,14 @@ frontend/
 2. Domain Model実装（Entity）
 3. Repository実装（実DB統合テスト付き）
 4. 認証機能実装（JWT）
-5. 初期データ投入スクリプト
+5. Top画面実装（ログイン後のホーム画面）
+6. 初期データ投入スクリプト
 
 **Acceptance**:
 - すべてのRepositoryテストがTestcontainersで実DB検証済み
 - JWT認証が動作し、localStorageに保存される
+- ログイン成功後にtop画面が表示される
+- top画面から社員検索画面に遷移できる
 - 初期データ（社員100件、スキル20件、組織10件）が投入可能
 
 ### Phase 2: Search & List (P1)
@@ -400,12 +411,12 @@ frontend/
 2. EmployeeController実装（詳細取得）
 3. PhotoController実装（画像配信）
 4. EmployeeDetail実装（React）
-5. Avatar実装（React、デフォルト画像対応）
+5. 画像表示コンポーネント実装（React、写真なし時は「no image」テキスト表示）
 
 **Acceptance**:
 - 社員詳細画面で基本情報・保有スキルが表示される
-- 顔写真が表示される（存在しない場合はデフォルトアバター）
-- 画像読み込み失敗時にデフォルトアバターが表示される
+- 顔写真が表示される（存在しない場合は「no image」テキスト）
+- 画像読み込み失敗時に「no image」テキストが表示される
 
 ### Phase 4: Integration & Testing (P1)
 **Goal**: E2Eテストと統合検証
@@ -508,7 +519,7 @@ frontend/
 | Risk | Impact | Mitigation |
 |------|--------|-----------|
 | 実DB統合テストの実行時間 | 中 | Testcontainersの並列実行、テストデータ最小化 |
-| 顔写真ファイルの管理 | 低 | デフォルトアバター実装、エラーハンドリング |
+| 顔写真ファイルの管理 | 低 | 「no image」テキスト表示、エラーハンドリング |
 | 五十音順ソートの実装 | 中 | MySQL照合順序（utf8mb4_ja_0900_as_cs）使用 |
 | 1000件データのパフォーマンス | 中 | インデックス最適化、ページネーション |
 
