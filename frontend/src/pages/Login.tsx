@@ -18,7 +18,7 @@ export const Login = () => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       storage.setToken(response.data.token);
-      navigate('/employees');
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
@@ -46,7 +46,7 @@ export const Login = () => {
     try {
       const response = await axios.post('/api/auth/skip');
       storage.setToken(response.data.token);
-      navigate('/employees');
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {

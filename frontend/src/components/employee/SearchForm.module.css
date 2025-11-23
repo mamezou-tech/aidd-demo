@@ -31,6 +31,12 @@
   gap: 5px;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .button {
   padding: 10px 30px;
   background: #3498db;
@@ -42,4 +48,32 @@
 
 .button:hover {
   background: #2980b9;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggleActive {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggleInactive {
+  padding: 8px 16px;
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggleInactive:hover {
+  background: #f5f5f5;
 }

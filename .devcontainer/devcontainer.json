@@ -24,7 +24,7 @@
   },
 
   // Install frontend dependencies after container creation
-  "postCreateCommand": "cd frontend && npm install",
+  "postCreateCommand": "cd frontend && npm install && npx playwright install --with-deps chromium",
 
   // Install spec-kit after container creation
   "postAttachCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.local/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv tool install --from git+https://github.com/github/spec-kit.git specify-cli",

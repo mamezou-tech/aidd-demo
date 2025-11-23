@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './pages/Login';
+import { Top } from './pages/Top';
 import { EmployeeSearch } from './pages/EmployeeSearch';
 import { EmployeeDetail } from './components/employee/EmployeeDetail';
 import { storage } from './utils/storage';
@@ -14,6 +15,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Top />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/employees"
           element={
@@ -36,7 +45,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<Navigate to={storage.getToken() ? "/employees" : "/login"} />} />
       </Routes>
     </BrowserRouter>
   );

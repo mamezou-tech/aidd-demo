@@ -5,6 +5,8 @@ interface SearchFormProps {
   organizations: Array<{ organizationId: string; name: string }>;
   skills: Array<{ skillId: string; name: string }>;
   onSearch: (criteria: SearchCriteria) => void;
+  displayMode: 'list' | 'card';
+  onDisplayModeChange: (mode: 'list' | 'card') => void;
 }
 
 interface SearchCriteria {
@@ -15,7 +17,7 @@ interface SearchCriteria {
   skillIds?: string[];
 }
 
-export const SearchForm = ({ organizations, skills, onSearch }: SearchFormProps) => {
+export const SearchForm = ({ organizations, skills, onSearch, displayMode, onDisplayModeChange }: SearchFormProps) => {
   const [name, setName] = useState('');
   const [organizationId, setOrganizationId] = useState('');
   const [position, setPosition] = useState('');
@@ -84,7 +86,26 @@ export const SearchForm = ({ organizations, skills, onSearch }: SearchFormProps)
           </label>
         ))}
       </div>
-      <button type="submit" className={styles.button}>検索</button>
+      <div className={styles.footer}>
+        <button type="submit" className={styles.button}>検索</button>
+        <div className={styles.toggle}>
+          <span>表示: </span>
+          <button
+            type="button"
+            className={displayMode === 'list' ? styles.toggleActive : styles.toggleInactive}
+            onClick={() => onDisplayModeChange('list')}
+          >
+            一覧
+          </button>
+          <button
+            type="button"
+            className={displayMode === 'card' ? styles.toggleActive : styles.toggleInactive}
+            onClick={() => onDisplayModeChange('card')}
+          >
+            カード
+          </button>
+        </div>
+      </div>
     </form>
   );
 };
