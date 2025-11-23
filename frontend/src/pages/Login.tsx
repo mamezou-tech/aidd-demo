@@ -39,6 +39,32 @@ export const Login = () => {
     }
   };
 
+  const handleSkipAuth = async () => {
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post('/api/auth/skip');
+      storage.setToken(response.data.token);
+      navigate('/employees');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const message = err.response.data?.message || '認証スキップに失敗しました';
+          setError(message);
+        } else if (err.request) {
+          setError('サーバーに接続できません。バックエンドが起動しているか確認してください。');
+        } else {
+          setError('認証スキップに失敗しました');
+        }
+      } else {
+        setError('認証スキップに失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ maxWidth: '400px', margin: '100px auto', padding: '20px' }}>
       <h1>ログイン</h1>
@@ -68,6 +94,22 @@ export const Login = () => {
           {loading ? 'ログイン中...' : 'ログイン'}
         </button>
       </form>
+      <div style={{ marginTop: '15px', textAlign: 'center' }}>
+        <button
+          onClick={handleSkipAuth}
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#6c757d',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+          disabled={loading}
+        >
+          デモ用（認証スキップ）
+        </button>
+      </div>
     </div>
   );
 };

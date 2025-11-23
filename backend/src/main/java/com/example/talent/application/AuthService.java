@@ -47,4 +47,18 @@ public class AuthService {
                 .map(user -> "パスワードが正しくありません")
                 .orElse("メールアドレスが登録されていません");
     }
+
+    public User authenticateWithoutPassword(String email) {
+        log.debug("Authenticating user without password: {}", email);
+        return userRepository.findByEmail(email)
+                .map(userEntity -> {
+                    User user = userEntity.toDomain();
+                    log.debug("User found for skip mode: {}", email);
+                    return user;
+                })
+                .orElseThrow(() -> {
+                    log.error("User not found for skip mode: {}", email);
+                    return new RuntimeException("User not found: " + email);
+                });
+    }
 }
