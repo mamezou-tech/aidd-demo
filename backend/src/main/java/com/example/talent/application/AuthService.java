@@ -35,10 +35,30 @@ public class AuthService {
                     return matches ? user : null;
                 })
                 .filter(user -> user != null);
-        
+
         if (result.isEmpty()) {
             log.debug("Authentication failed - user not found or password mismatch");
         }
         return result;
+    }
+
+    public String getAuthenticationFailureReason(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> "パスワードが正しくありません")
+                .orElse("メールアドレスが登録されていません");
+    }
+
+    public User authenticateWithoutPassword(String email) {
+        log.debug("Authenticating user without password: {}", email);
+        return userRepository.findByEmail(email)
+                .map(userEntity -> {
+                    User user = userEntity.toDomain();
+                    log.debug("User found for skip mode: {}", email);
+                    return user;
+                })
+                .orElseThrow(() -> {
+                    log.error("User not found for skip mode: {}", email);
+                    return new RuntimeException("User not found: " + email);
+                });
     }
 }

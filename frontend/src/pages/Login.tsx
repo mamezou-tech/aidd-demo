@@ -14,13 +14,52 @@ export const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       storage.setToken(response.data.token);
       navigate('/employees');
     } catch (err) {
-      setError('認証に失敗しました');
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          // バックエンドからのエラーレスポンス
+          const message = err.response.data?.message || '認証に失敗しました';
+          setError(message);
+        } else if (err.request) {
+          // バックエンドが起動していない場合
+          setError('サーバーに接続できません。バックエンドが起動しているか確認してください。');
+        } else {
+          setError('認証に失敗しました');
+        }
+      } else {
+        setError('認証に失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSkipAuth = async () => {
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post('/api/auth/skip');
+      storage.setToken(response.data.token);
+      navigate('/employees');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const message = err.response.data?.message || '認証スキップに失敗しました';
+          setError(message);
+        } else if (err.request) {
+          setError('サーバーに接続できません。バックエンドが起動しているか確認してください。');
+        } else {
+          setError('認証スキップに失敗しました');
+        }
+      } else {
+        setError('認証スキップに失敗しました');
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +94,22 @@ export const Login = () => {
           {loading ? 'ログイン中...' : 'ログイン'}
         </button>
       </form>
+      <div style={{ marginTop: '15px', textAlign: 'center' }}>
+        <button
+          onClick={handleSkipAuth}
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#6c757d',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+          disabled={loading}
+        >
+          デモ用（認証スキップ）
+        </button>
+      </div>
     </div>
   );
 };
