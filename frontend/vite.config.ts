@@ -8,7 +8,9 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        // Dev Container環境ではホストのDockerゲートウェイ経由でアクセス
+        // 通常の環境ではlocalhost、コンテナ環境では172.17.0.1（デフォルトゲートウェイ）
+        target: process.env.VITE_API_TARGET || 'http://172.17.0.1:8080',
         changeOrigin: true
       }
     }
