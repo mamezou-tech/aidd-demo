@@ -51,6 +51,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        // EC2デプロイ時は、EC2のパブリックIPアドレス (http://<EC2-IP>:3000) を追加してください
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://*.githubpreview.dev", "https://*.app.github.dev"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
