@@ -1,0 +1,35 @@
+# 依存関係 (Dockerビルド内で再インストール)
+node_modules
+
+# ビルド成果物 (Dockerビルド内で生成)
+dist
+.vite
+
+# テスト関連
+test-results
+playwright-report
+e2e-results
+
+# 開発ツール
+.vscode
+.idea
+
+# ログファイル
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# OS固有ファイル
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore

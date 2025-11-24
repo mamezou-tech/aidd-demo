@@ -82,7 +82,7 @@ export const SearchForm = ({ organizations, skills, onSearch, displayMode, onDis
               checked={selectedSkills.includes(skill.skillId)}
               onChange={() => toggleSkill(skill.skillId)}
             />
-            {skill.skillName || skill.name}
+            {skill.name}
           </label>
         ))}
       </div>

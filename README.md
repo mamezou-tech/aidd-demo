@@ -136,6 +136,70 @@ npm run dev
 
 ---
 
+## 本番環境でのデプロイ (EC2等)
+
+本番環境では、フロントエンドもDockerコンテナとして起動できます。
+
+### 起動コマンド
+
+```bash
+docker compose --profile production up -d
+```
+
+このコマンドで以下がすべて起動します：
+- MySQLデータベース（ポート3306）
+- Spring Bootアプリケーション（ポート8080）
+- Reactフロントエンド（ポート3000、Nginx経由）
+
+### 構成
+
+- フロントエンドはNginxで静的ファイルとして配信
+- `/api/*` へのリクエストは自動的にバックエンド（ポート8080）にプロキシ
+- ブラウザから `http://<サーバーIP>:3000` でアクセス可能
+
+### 注意事項
+
+**重要**: ローカル開発時は `--profile production` を指定しないでください。
+
+- ローカル開発: `docker compose up -d` (frontendコンテナは起動しない)
+- 本番デプロイ: `docker compose --profile production up -d` (frontendコンテナも起動)
+
+ローカル開発では引き続き `npm run dev` でVite開発サーバーを使用してください。
+
+---
+
+### EC2インスタンスの作成
+
+Q Developer CLIで以下を指示:
+
+```
+EC2インスタンスを作成してください。
+
+要件:
+- 名前: aidd-demo
+- AMI: Amazon Linux 2023 (最新版)
+- インスタンスタイプ: t3.small
+- vCPU: 2
+- メモリ: 2GB
+- ストレージ: 20GB (gp3)
+- リージョン: ap-northeast-1 (東京)
+- キーペア: 新規作成して ~/.ssh/aidd-demo-key.pem に保存
+- セキュリティグループ: 新規作成
+  - SSH (ポート22): マイIPのみ許可
+  - カスタムTCP (ポート3000): マイIPのみ許可
+- パブリックIPアドレス: 自動割り当て有効
+```
+
+作成後、キーペアのパーミッション設定:
+
+```bash
+chmod 400 ~/.ssh/aidd-demo-key.pem
+```
+
+注意: t3.small (2GB RAM) を推奨。t2.micro/t3.micro (1GB) ではメモリ不足の可能性あり。
+
+---
+
 ## 動作確認
 
 ### バックエンドのヘルスチェック
